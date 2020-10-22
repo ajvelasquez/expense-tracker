@@ -1,0 +1,17 @@
+version: '3'
+services:
+  # back:
+  #   build: ./backend
+  #   command: yarn serve
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./backend:/app
+  front:
+    build: ./front
+    command: yarn start
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front:/app
+    stdin_open: true
