@@ -1,12 +1,24 @@
 version: '3'
 services:
-  # back:
-  #   build: ./backend
-  #   command: yarn serve
-  #   ports:
-  #     - "5000:5000"
-  #   volumes:
-  #     - ./backend:/app
+  back:
+    build: ./back
+    command: yarn dev
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./back:/app
+    depends_on:
+      - mongo
+    env_file:
+      - .env
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
   front:
     build: ./front
     command: yarn start
@@ -15,3 +27,5 @@ services:
     volumes:
       - ./front:/app
     stdin_open: true
+    depends_on:
+      - back
